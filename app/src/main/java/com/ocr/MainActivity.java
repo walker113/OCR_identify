@@ -23,6 +23,7 @@ import com.baidu.ocr.sdk.model.OcrResponseResult;
 import com.baidu.ocr.ui.camera.CameraActivity;
 import com.baidu.ocr.ui.camera.CameraNativeHelper;
 import com.baidu.ocr.ui.camera.CameraView;
+import com.socks.library.KLog;
 
 import java.io.File;
 
@@ -216,7 +217,10 @@ public class MainActivity extends AppCompatActivity {
                 String filePath = FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath();
                 if (!TextUtils.isEmpty(contentType)) {
                     if (CameraActivity.CONTENT_TYPE_ID_CARD_FRONT.equals(contentType)) {
+                        KLog.d();
                         recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);
+
+                        KLog.e(new File(filePath).length());
                     } else if (CameraActivity.CONTENT_TYPE_ID_CARD_BACK.equals(contentType)) {
                         recIDCard(IDCardParams.ID_CARD_SIDE_BACK, filePath);
                     } else if (CameraActivity.CONTENT_TYPE_BANK_CARD.equals(contentType)) {

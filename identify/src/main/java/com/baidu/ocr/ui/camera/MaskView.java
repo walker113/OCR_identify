@@ -21,6 +21,10 @@ import com.baidu.ocr.ui.R;
 import java.io.File;
 
 @SuppressWarnings("unused")
+/**
+ * 身份证，银行卡，等裁剪用的遮罩
+ * onDraw中指定5.0，非5.0是不是会悲剧？
+ */
 public class MaskView extends View {
 
     public static final int MASK_TYPE_NONE = 0;

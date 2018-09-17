@@ -25,6 +25,7 @@ import com.baidu.idcardquality.IDcardQualityProcess;
 import com.baidu.ocr.ui.R;
 import com.baidu.ocr.ui.crop.CropView;
 import com.baidu.ocr.ui.crop.FrameOverlayView;
+import com.socks.library.KLog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -129,6 +130,7 @@ public class CameraActivity extends Activity {
         isNativeEnable = getIntent().getBooleanExtra(KEY_NATIVE_ENABLE, true);
         isNativeManual = getIntent().getBooleanExtra(KEY_NATIVE_MANUAL, false);
 
+        KLog.e("是否是本地质量控制扫描 - " + isNativeEnable);
         if (token == null && !isNativeManual) {
             isNativeEnable = false;
         }
@@ -267,6 +269,7 @@ public class CameraActivity extends Activity {
             CameraThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {
+                    KLog.e();
                     try {
                         FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
@@ -290,6 +293,7 @@ public class CameraActivity extends Activity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+                    KLog.e();
                     takePictureContainer.setVisibility(View.INVISIBLE);
                     if (cropMaskView.getMaskType() == MaskView.MASK_TYPE_NONE) {
                         cropView.setFilePath(outputFile.getAbsolutePath());
@@ -417,20 +421,28 @@ public class CameraActivity extends Activity {
         int rotation = getWindowManager().getDefaultDisplay().getRotation();
         int orientation;
         int cameraViewOrientation = CameraView.ORIENTATION_PORTRAIT;
+
+        KLog.e(newConfig.toString());
+
         switch (newConfig.orientation) {
             case Configuration.ORIENTATION_PORTRAIT:
+                KLog.e();
                 cameraViewOrientation = CameraView.ORIENTATION_PORTRAIT;
                 orientation = OCRCameraLayout.ORIENTATION_PORTRAIT;
                 break;
             case Configuration.ORIENTATION_LANDSCAPE:
+                KLog.e();
                 orientation = OCRCameraLayout.ORIENTATION_HORIZONTAL;
                 if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_90) {
+                    KLog.e();
                     cameraViewOrientation = CameraView.ORIENTATION_HORIZONTAL;
                 } else {
+                    KLog.e();
                     cameraViewOrientation = CameraView.ORIENTATION_INVERT;
                 }
                 break;
             default:
+                KLog.e();
                 orientation = OCRCameraLayout.ORIENTATION_PORTRAIT;
                 cameraView.setOrientation(CameraView.ORIENTATION_PORTRAIT);
                 break;
